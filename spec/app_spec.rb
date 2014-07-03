@@ -36,7 +36,12 @@ end
 
 feature "login" do
   scenario "user should be able to login and see welcome message" do
-    visit '/'
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
 
     fill_in "username", :with => "Sean"
     fill_in "password", :with => "baby"
@@ -49,7 +54,12 @@ end
 
 feature "logged in vs logged out" do
   scenario "user should have different views depending on if they are logged in or logged out" do
-    visit '/'
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
 
     fill_in "username", :with => "Sean"
     fill_in "password", :with => "baby"
@@ -58,9 +68,31 @@ feature "logged in vs logged out" do
     expect(page).to have_content("Welcome, Sean")
 
     visit '/'
-    expect(page).to_not have_button("Register")
-    expect(page).to_not have_button("Login``")
-    expect(page).to have_button("Logout")
 
+    expect(page).to have_content("Welcome, Sean")
+    expect(page).to have_button("Logout")
+  end
+end
+
+feature "logging out works" do
+  scenario "when a user clicks logout they are taken to the homepage. should see login and register" do
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Login"
+
+    visit '/'
+
+    click_button "Logout"
+
+    expect(page).to have_content("Register")
+    expect(page).to have_button("Login")
   end
 end
