@@ -41,9 +41,11 @@ end
 
 ##LIST OF USERS
 
-def generate_html_userlist
+def generate_html_userlist(user)
   output = @user_database.all.map do |hash|
-     '<li>' + hash[:username] + '</li>'
+    if hash[:username] != user
+    '<li>' + hash[:username] + '</li>'
+    end
   end
-  output.join()
+  output.join
 end
