@@ -1,3 +1,5 @@
+## REGISTRATION
+
 def checks_username_password(user_hash)
   if user_hash[:username] == "" && user_hash[:password] == ""
     flash[:registration] = "Username and password is required"
@@ -27,3 +29,18 @@ def unique_username(user_hash)
   end
 end
 
+##LOGIN-SESSIONS
+
+def create_session_id(user, password)
+  @user_database.all.each do |user_hash|
+    if user_hash[:username] == user && user_hash[:password] == password
+      session[:user_id] = user_hash[:id]
+    end
+  end
+end
+
+# @user_database.all.each do |user_hash|
+#   if user_hash[:username] == user && user_hash[:password] == pwrd
+#     session[:user_id] = user_hash[:id]
+#   end
+# end

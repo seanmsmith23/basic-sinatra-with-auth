@@ -22,11 +22,7 @@ class App < Sinatra::Application
     user = params[:username]
     pwrd = params[:password]
 
-    @user_database.all.each do |user_hash|
-      if user_hash[:username] == user && user_hash[:password] == pwrd
-        session[:user_id] = user_hash[:id]
-      end
-    end
+    create_session_id(user, pwrd)
 
     redirect "/"
   end
