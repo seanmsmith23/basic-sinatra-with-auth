@@ -17,19 +17,23 @@ class App < Sinatra::Application
     redirect '/'
   end
 
-  get "/" do
+  post "/signin" do
     user = params[:username]
     pwrd = params[:password]
 
     @user_database.all.each do |user_hash|
-      if user_hash.has_value?(user) && user_hash.has_value?(pwrd)
+      if user_hash[:username] == user && user_hash[:password] == pwrd
         session[:user_id] = user_hash[:id]
       end
     end
 
+    redirect "/"
+  end
+
+  get "/" do
     if session[:user_id]
-      user_info = @user_database.find(session[:user_id])
-      user_name = user_info[:username]
+      user_hash = @user_database.find(session[:user_id])
+      user_name = user_hash[:username]
       erb :logged_in, :locals => { :name => user_name }
     else
       erb :root, :locals => { :thanks_notice => "" }
