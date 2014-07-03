@@ -39,8 +39,11 @@ def create_session_id(user, password)
   end
 end
 
-# @user_database.all.each do |user_hash|
-#   if user_hash[:username] == user && user_hash[:password] == pwrd
-#     session[:user_id] = user_hash[:id]
-#   end
-# end
+##LIST OF USERS
+
+def generate_html_userlist
+  output = @user_database.all.map do |hash|
+     '<li>' + hash[:username] + '</li>'
+  end
+  output.join()
+end

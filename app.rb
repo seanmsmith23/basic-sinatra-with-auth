@@ -32,7 +32,7 @@ class App < Sinatra::Application
     if session[:user_id]
       user_hash = @user_database.find(session[:user_id])
       user_name = user_hash[:username]
-      erb :logged_in, :locals => { :name => user_name }
+      erb :logged_in, :locals => { :name => user_name, :user_list => generate_html_userlist }
     else
       erb :root
     end

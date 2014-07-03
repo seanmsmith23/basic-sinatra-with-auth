@@ -88,6 +88,31 @@ feature "login" do
     click_button "Login"
     expect(page).to have_content("Welcome, Sean")
   end
+  scenario "a user should see list of all users after logging in" do
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/register'
+
+    fill_in "username", :with => "Peter"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Login"
+
+    expect(page).to have_content("Sean")
+    expect(page).to have_content("Peter")
+  end
 
 end
 
