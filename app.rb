@@ -1,5 +1,6 @@
 require "sinatra"
 require "rack-flash"
+require_relative "model"
 
 require "./lib/user_database"
 
@@ -47,10 +48,8 @@ class App < Sinatra::Application
   end
 
   post "/register" do
-    user = { :username => params[:username], :password => params[:password], :user_id => nil }
-    @user_database.insert(user)
-    flash[:notice] = "Thank you for registering"
-    redirect '/'
+    user = { :username => params[:username], :password => params[:password] }
+    checks_username_password(user)
   end
 
 

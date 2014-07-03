@@ -32,6 +32,26 @@ feature "Registration" do
     expect(page).to_not have_content("Thank you for registering")
   end
 
+  scenario "user should see error messages (flash) when not providing username or password" do
+    visit '/register'
+
+    click_button "Submit"
+
+    expect(page).to have_content("Username and password is required")
+
+    fill_in "username", :with => "Sean"
+    click_button "Submit"
+
+    expect(page).to have_content("Password is required")
+
+    fill_in "password", :with => "pass"
+    click_button "Submit"
+
+    expect(page).to have_content("Username is required")
+
+
+  end
+
 end
 
 feature "login" do
