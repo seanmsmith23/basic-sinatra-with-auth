@@ -49,7 +49,24 @@ feature "Registration" do
 
     expect(page).to have_content("Username is required")
 
+  end
 
+  scenario "user cannot register a username that already exists" do
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "second"
+
+    click_button "Submit"
+
+    expect(page).to have_content("This username is already taken")
   end
 
 end
@@ -62,6 +79,8 @@ feature "login" do
     fill_in "password", :with => "baby"
 
     click_button "Submit"
+
+    visit '/'
 
     fill_in "username", :with => "Sean"
     fill_in "password", :with => "baby"
@@ -80,6 +99,8 @@ feature "logged in vs logged out" do
     fill_in "password", :with => "baby"
 
     click_button "Submit"
+
+    visit '/'
 
     fill_in "username", :with => "Sean"
     fill_in "password", :with => "baby"
@@ -102,6 +123,8 @@ feature "logging out works" do
     fill_in "password", :with => "baby"
 
     click_button "Submit"
+
+    visit '/'
 
     fill_in "username", :with => "Sean"
     fill_in "password", :with => "baby"

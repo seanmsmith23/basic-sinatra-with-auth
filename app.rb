@@ -52,6 +52,4 @@ class App < Sinatra::Application
     checks_username_password(user)
   end
 
-
-
 end
