@@ -31,25 +31,28 @@ class App < Sinatra::Application
   end
 
   get "/" do
+
     if session[:user_id]
       user_hash = @user_database.find(session[:user_id])
       user_name = user_hash[:username]
       erb :logged_in, :locals => { :name => user_name }
     else
-      erb :root, :locals => { :thanks_notice => "" }
+      erb :root
     end
 
-  end
-
-  post "/" do
-    user = { :username => params[:username], :password => params[:password], :user_id => nil }
-    @user_database.insert(user)
-    confirmation = flash.now[:notice] = "Thank you for registering"
-    erb :root, :locals => { :thanks_notice => confirmation }
   end
 
   get "/register" do
     erb :register
   end
+
+  post "/register" do
+    user = { :username => params[:username], :password => params[:password], :user_id => nil }
+    @user_database.insert(user)
+    flash[:notice] = "Thank you for registering"
+    redirect '/'
+  end
+
+
 
 end

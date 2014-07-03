@@ -127,3 +127,7 @@ section {
 #flash_confirm {
     color: green;
 }
+
+#flash_box {
+    height: 20px;
+}
