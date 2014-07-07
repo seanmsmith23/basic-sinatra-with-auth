@@ -23,6 +23,7 @@ class App < Sinatra::Application
     user = params[:username]
     pwrd = params[:password]
 
+    check_for_registered_user(user, pwrd)
     create_session_id(user, pwrd)
 
     redirect "/"

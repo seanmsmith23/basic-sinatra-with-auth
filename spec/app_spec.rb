@@ -122,6 +122,32 @@ feature "login" do
     within('h2#other_users') { expect(page).to_not have_content("Sean") }
   end
 
+  scenario "a user should see error messages if they haven't registered before login" do
+    visit '/'
+
+    fill_in "username", :with => "Henry"
+    fill_in "password", :with => "baby"
+
+    click_button "Login"
+
+    expect(page).to have_content("Username/password combination not found")
+
+    visit '/'
+
+    fill_in "username", :with => "Henry"
+    click_button "Login"
+
+    expect(page).to have_content("No password entered")
+
+    visit '/'
+
+    fill_in "password", :with => "baby"
+    click_button "Login"
+
+    expect(page).to have_content("No username entered")
+
+  end
+
 end
 
 feature "logged in vs logged out" do

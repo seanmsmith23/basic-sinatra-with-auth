@@ -29,6 +29,23 @@ def unique_username(user_hash)
   end
 end
 
+## LOGIN ERRORS
+
+def check_for_registered_user(user, password)
+  match = @user_database.all.select do |existing_user|
+    existing_user[:username] == user && existing_user[:password] == password
+  end
+
+  if user == ""
+    flash[:registration] = "No username entered"
+  elsif password == ""
+    flash[:registration] = "No password entered"
+  elsif match == []
+    flash[:registration] = "Username/password combination not found"
+  end
+end
+
+
 ##LOGIN-SESSIONS
 
 def create_session_id(user, password)
@@ -39,7 +56,7 @@ def create_session_id(user, password)
   end
 end
 
-##LIST OF USERS
+##HTML LIST GENERATORS
 
 def generate_html_userlist(user)
   output = @user_database.all.map do |hash|
