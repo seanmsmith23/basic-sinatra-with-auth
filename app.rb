@@ -11,6 +11,7 @@ class App < Sinatra::Application
   def initialize
     super
     @user_database = UserDatabase.new
+    @fish_database = []
   end
 
   post "/signout" do
@@ -33,7 +34,7 @@ class App < Sinatra::Application
       user_hash = @user_database.find(session[:user_id])
       user_name = user_hash[:username]
       puts user_name
-      erb :logged_in, :locals => { :name => user_name, :user_list => generate_html_userlist(user_name) }
+      erb :logged_in, :locals => { :name => user_name, :user_list => generate_html_userlist(user_name), :fish_list => generate_html_fishlist(@fish_database) }
     else
       erb :root
     end
@@ -47,6 +48,12 @@ class App < Sinatra::Application
   post "/register" do
     user = { :username => params[:username], :password => params[:password] }
     checks_username_password(user)
+  end
+
+  post "/fish/new" do
+    fish_entry = { name: params[:fish_name], wiki: params[:wikipedia], user: session[:user_id] }
+    @fish_database << fish_entry
+    redirect "/"
   end
 
 end

@@ -119,7 +119,7 @@ feature "login" do
 
     expect(page).to have_content("Bobby")
     expect(page).to have_content("Peter")
-    within('h2') { expect(page).to_not have_content("Sean") }
+    within('h2#other_users') { expect(page).to_not have_content("Sean") }
   end
 
 end
@@ -170,5 +170,38 @@ feature "logging out works" do
 
     expect(page).to have_content("Register")
     expect(page).to have_button("Login")
+  end
+end
+
+feature "fish" do
+  scenario "user can create fish and view them on the homepage" do
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Login"
+
+    visit '/'
+
+    expect(page).to have_content("Create Fish:")
+
+    fill_in "fish_name", :with => "Puffer"
+    fill_in "wikipedia", :with => "http://en.wikipedia.org/wiki/Tetraodontidae"
+
+    click_button "Create Fish"
+
+    expect(page).to have_content "Puffer"
+
+    click_link "Puffer"
+
+    expect(page).to have_content "Tetraodontidae"
   end
 end

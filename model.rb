@@ -49,3 +49,10 @@ def generate_html_userlist(user)
   end
   output.join
 end
+
+def generate_html_fishlist(fishes)
+  output = fishes.map do |hash|
+    '<li>' + "<a href='#{hash[:wiki]}'>" + hash[:name] + '</a>' + '</li>'
+  end
+  output.join
+end
