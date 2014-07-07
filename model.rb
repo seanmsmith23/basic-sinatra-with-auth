@@ -52,7 +52,9 @@ end
 
 def generate_html_fishlist(fishes)
   output = fishes.map do |hash|
+    if hash[:author] == session[:user_id]
     '<li>' + "<a href='#{hash[:wiki]}'>" + hash[:name] + '</a>' + '</li>'
+    end
   end
   output.join
 end

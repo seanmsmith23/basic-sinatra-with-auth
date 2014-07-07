@@ -51,7 +51,7 @@ class App < Sinatra::Application
   end
 
   post "/fish/new" do
-    fish_entry = { name: params[:fish_name], wiki: params[:wikipedia], user: session[:user_id] }
+    fish_entry = { name: params[:fish_name], wiki: params[:wikipedia], author: session[:user_id] }
     @fish_database << fish_entry
     redirect "/"
   end
