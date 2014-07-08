@@ -61,15 +61,15 @@ end
 def generate_html_userlist(user)
   output = @user_database.all.map do |hash|
     if hash[:username] != user
-    '<li>' + hash[:username] + delete_button_html(hash[:username], hash[:id]) + '</li>'
+    '<li>' + "<a href='/#{hash[:id]}/fish'>#{hash[:username]}</a>" + delete_button_html(hash[:username], hash[:id]) + '</li>'
     end
   end
   output.join
 end
 
-def generate_html_fishlist(fishes)
+def generate_html_fishlist(fishes, id)
   output = fishes.map do |hash|
-    if hash[:author] == session[:user_id]
+    if hash[:author] == id
     '<li>' + "<a href='#{hash[:wiki]}'>" + hash[:name] + '</a>' + '</li>'
     end
   end
@@ -79,3 +79,4 @@ end
 def delete_button_html(username, id)
   "<br><form action='/delete' method='post'><button name='delete_user' type='submit' value='#{id}'>Delete #{username}</button></form>"
 end
+

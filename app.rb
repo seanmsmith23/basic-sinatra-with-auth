@@ -35,7 +35,7 @@ class App < Sinatra::Application
       user_hash = @user_database.find(session[:user_id])
       user_name = user_hash[:username]
       puts user_name
-      erb :logged_in, :locals => { :name => user_name, :user_list => generate_html_userlist(user_name), :fish_list => generate_html_fishlist(@fish_database) }
+      erb :logged_in, :locals => { :name => user_name, :user_list => generate_html_userlist(user_name), :fish_list => generate_html_fishlist(@fish_database, session[:user_id]) }
     else
       erb :root
     end
@@ -61,6 +61,11 @@ class App < Sinatra::Application
     user_id_to_delete = params[:delete_user].to_i
     @user_database.delete(user_id_to_delete)
     redirect "/"
+  end
+
+  get "/:id/fish" do
+    user_id = params[:id].to_i
+    erb :users_fish, :locals => { :the_fish => generate_html_fishlist(@fish_database, user_id)}
   end
 
 end
