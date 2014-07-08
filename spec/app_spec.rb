@@ -324,6 +324,44 @@ feature "fish" do
     expect(page).to have_content("Puffer")
 
   end
+
+  scenario "user can delete their own fish" do
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/register'
+
+    fill_in "username", :with => "Paul"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Login"
+
+    visit '/'
+
+    expect(page).to have_content("Create Fish:")
+
+    fill_in "fish_name", :with => "Puffer"
+    fill_in "wikipedia", :with => "http://en.wikipedia.org/wiki/Tetraodontidae"
+
+    click_button "Create Fish"
+
+    expect(page).to have_content "Puffer"
+
+    click_button "Delete Puffer"
+
+    expect(page).to_not have_content "Puffer"
+  end
 end
 
 feature "delete a user" do

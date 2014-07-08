@@ -70,7 +70,7 @@ end
 def generate_html_fishlist(fishes, id)
   output = fishes.map do |hash|
     if hash[:author] == id
-    '<li>' + "<a href='#{hash[:wiki]}'>" + hash[:name] + '</a>' + '</li>'
+    '<li>' + "<a href='#{hash[:wiki]}'>" + hash[:name] + '</a>'+ delete_fish_button_html(hash[:name], id) + '</li>'
     end
   end
   output.join
@@ -78,5 +78,13 @@ end
 
 def delete_button_html(username, id)
   "<br><form action='/delete' method='post'><button name='delete_user' type='submit' value='#{id}'>Delete #{username}</button></form>"
+end
+
+def delete_fish_button_html(fishname, user_id)
+  if user_id == session[:user_id]
+    "<br><form action='/delete_fish' method='post'><button name='delete_fish' type='submit' value='#{fishname}'>Delete #{fishname}</button></form>"
+  else
+    ''
+  end
 end
 

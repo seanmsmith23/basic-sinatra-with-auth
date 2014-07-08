@@ -63,6 +63,12 @@ class App < Sinatra::Application
     redirect "/"
   end
 
+  post "/delete_fish" do
+    fish_to_delete = params[:delete_fish]
+    @fish_database.delete_if{ |hash| hash[:author] == session[:user_id] && hash[:name] == fish_to_delete }
+    redirect "/"
+  end
+
   get "/:username/:id/fish" do
     user_id = params[:id].to_i
     username = params[:username]
