@@ -277,3 +277,42 @@ feature "fish" do
 
   end
 end
+
+feature "delete a user" do
+  scenario "user can delete other users" do
+    visit '/register'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/register'
+
+    fill_in "username", :with => "Bobby"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/register'
+
+    fill_in "username", :with => "Peter"
+    fill_in "password", :with => "baby"
+
+    click_button "Submit"
+
+    visit '/'
+
+    fill_in "username", :with => "Sean"
+    fill_in "password", :with => "baby"
+
+    click_button "Login"
+
+    expect(page).to have_content("Bobby")
+    expect(page).to have_content("Peter")
+
+    click_button "Delete Bobby"
+
+    expect(page).to_not have_content("Bobby")
+  end
+end

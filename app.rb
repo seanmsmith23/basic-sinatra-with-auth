@@ -57,4 +57,10 @@ class App < Sinatra::Application
     redirect "/"
   end
 
+  post "/delete" do
+    user_id_to_delete = params[:delete_user].to_i
+    @user_database.delete(user_id_to_delete)
+    redirect "/"
+  end
+
 end
