@@ -63,9 +63,10 @@ class App < Sinatra::Application
     redirect "/"
   end
 
-  get "/:id/fish" do
+  get "/:username/:id/fish" do
     user_id = params[:id].to_i
-    erb :users_fish, :locals => { :the_fish => generate_html_fishlist(@fish_database, user_id)}
+    username = params[:username]
+    erb :users_fish, :locals => { :the_fish => generate_html_fishlist(@fish_database, user_id), :name => username }
   end
 
 end

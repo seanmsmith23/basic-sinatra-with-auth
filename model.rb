@@ -61,7 +61,7 @@ end
 def generate_html_userlist(user)
   output = @user_database.all.map do |hash|
     if hash[:username] != user
-    '<li>' + "<a href='/#{hash[:id]}/fish'>#{hash[:username]}</a>" + delete_button_html(hash[:username], hash[:id]) + '</li>'
+    '<li>' + "<a href='/#{hash[:username]}/#{hash[:id]}/fish'>#{hash[:username]}</a>" + delete_button_html(hash[:username], hash[:id]) + '</li>'
     end
   end
   output.join
